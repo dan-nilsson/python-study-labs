@@ -201,7 +201,7 @@ def dict_departments():
 #Part E - 5
 def dict_courses():
     courses = [ 
-        {'name' : 'Python & AI', 'teacher' : 'Haitem', 'topics' : ['Fundamentals','SQL Databases','Data Analasys','ML & DL']},
+        {'name' : 'Python & AI', 'teacher' : 'Haithem', 'topics' : ['Fundamentals','SQL Databases','Data Analasys','ML & DL']},
         {'name' : 'IT-Helpdesk', 'teacher' : 'Bob', 'topics' : ['Microsoft Suite','Work Process','Customer Handling','Technical Base']},
         {'name' : '.NET Fullstack', 'teacher' : 'Michael', 'topics' : ['.NET','JavaScript','Backend','Deployment']}
     ]
@@ -222,8 +222,35 @@ def personal_media_catalouge():
     ]
     genres = set([d.get('genre') for d in movies])
     print(genres)
-personal_media_catalouge()
+    movie_tuples = [(d.get('title'), d.get('year')) for d in movies]
+    print(movie_tuples, end='\n')
 
+    for m in movies:
+        for key,val in m.items():
+            print(f'{key}: {val}',end=' ')
+        print()   
+
+# personal_media_catalouge()
 
 #Part G - 1
+def unique_users():
+    users_a = ['Bob', 'Linda', 'Eric', 'Jimmy', 'Stephen', 'Emily']
+    users_b = ['Linda', 'Henric', 'Gregory', 'Jimmy', 'Frank', 'Bob']
+
+    duplicates = set(users_a).intersection(set(users_b))
+    print(duplicates)
+    all_users = set(users_a).union(set(users_b))
+    unique = all_users.difference(duplicates)
+    print(unique)
+# unique_users()
+
+#Part G - 4
+'''
+List is a good generic data structure for multiple elements
+Tuple is a less complex Dictionary where you don't need key lookup but is used much in the same manner
+- where formatting determines field 'key'
+Set is a good way to store unique values where order/indexing doesn't matter
+Dictionary is a good data structure for more complex key-word type entries.
+- Often with same formatting where each dictionary is a multiple field data point
+'''
 
