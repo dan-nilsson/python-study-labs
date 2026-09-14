@@ -212,6 +212,67 @@ def final_total(items, discount=0):
 
 #Part E - 4
 # Done - I do not apporove
+'''
+Part F
+1. Create functions to normalize a participant name, validate an age range using boolean return values, calculate a registration fee based on age/student status, and create a participant dictionary. 
+2. Create at least eight participant dictionaries using your functions. 
+3. Write a function that receives the participant list and returns the total expected registration revenue. 
+4. Write a function that returns only student participants. 
+5. Write a function that returns the oldest participant. 
+6. Write a function that creates a readable summary string for one participant. 
+7. Keep input/output responsibilities separate from calculation functions as much as possible.
+'''
+#Part F - 1
+participants = []
+
+def register_participant(name: str,age: int,student:bool=True) -> dict:
+    participants.append({'name' : name, 'age' : age, 'student' : student, 'reg_fee': calc_fee(age,student)})
+
+def calc_fee(age,student=True):
+    return 100 if age < 18 or age >= 18 and student else 200
+
+# print(calc_fee(18, False))
+
+#Part F - 2
+register_participant('Mona',18)
+register_participant('Hans',25)
+register_participant('Lina',17,False)
+register_participant('Göran',25,False)
+register_participant('Bob',35)
+register_participant('Frank',45,False)
+register_participant('Johan',12)
+register_participant('Börje',37)
+
+# print(*participants,sep='\n')
+
+#Part F - 3
+def calc_registration_revenue(participants):
+    return sum(p['reg_fee'] for p in participants)
+
+# print(calc_registration_revenue(participants))
+
+#Part F - 4
+def student_list(participants):
+    return [p for p in participants if p['student']]
+
+# print(*student_list(participants),sep='\n')
+
+#Part F - 5
+def oldest_dude(participants):
+    oldest = participants[0]
+    for p in participants:
+        if p['age'] > oldest['age']: oldest = p
+    return oldest
+
+# print(oldest_dude(participants))
+
+#Part F - 6
+def participant_print(p):
+    print(  f'Name: {p['name']} Age: {p['age']} Student: {'Yes' if p['student'] else 'No'} '
+            f'Registration Fee: {p['reg_fee']}.'
+        )
+
+# participant_print(oldest_dude(participants))
 
 #Part G - 1
 def min_and_max(num: [int]) -> tuple:
@@ -291,6 +352,12 @@ def main():
     # print(palindrome('Hello'),palindrome('Anna'))
     # print(count_character_freq('Himmalaya Mountain Range'))
     # print(pos_neg_zero(numbahs))
+    # print(calc_fee(18, False))
+    # print(*participants,sep='\n')
+    # print(calc_registration_revenue(participants))
+    # print(*student_list(participants),sep='\n')
+    # print(oldest_dude(participants))
+    # participant_print(oldest_dude(participants))
     None
 
 if __name__ == '__main__':
