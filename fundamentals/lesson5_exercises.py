@@ -184,46 +184,103 @@ def make_string(*args):
 # print(make_string('hello',0,True,'yes'))
 # print(make_string(1,2,'python',0.15,None,1,2))
 
-#Part F
+#Part F - 1-5
+section1 = 'Code Review Went Well. Nothing Major To Fix.'
+section2 = 'Overall Looks Fine. Could Do With Some More Error Handling.'
+section3 = 'The Code Structure Looks Fine. Low Code Duplication.'
+
+sections = [{'code review' : section1}, {'bugs' : section2}, {'refactoring' : section3}]
+
+meta_data_fields = ['author','department','version','confidential','date']
 
 def create_report(title,*sections,**metadata) -> dict:
-    return {'title' : title,'sections' : {s : i+1 for i,s in enumerate(sections)}, **metadata}
+    return {'title' : title,'sections' : sections, **metadata}
 
-# print(create_report('code review','bugs','refactoring',version='3.0',confidential='yes'))
+# print(create_report('code review',*sections,confidential='yes'))
 
 def summarize_report(report) -> str:
     title, sections = report['title'],report['sections']
     del report['title'], report['sections']
     rest = report
     return( f'Title: {title.title()}\n'+
-            f'Sections: ' + ' - '.join(f'{val}: {key.capitalize()}' for key, val in sections.items())+ '\n' +
-            f'Meta: ' + ' - '.join(f'{key}: {val}' for key, val in rest.items())
+            f'Sections: {'\n'.join(f'{list(s.keys())[0].title()} - {list(s.values())[0]}'for s in sections)}\n' +
+            f'Meta: {' - '.join(f'{key}: {val}' for key, val in rest.items() if key in meta_data_fields)}'
     )
           
-# print(summarize_report(create_report('code review','bugs','refactoring',version='3.0',confidential='yes')))
+# print(summarize_report(create_report('code review',*sections,version='3.0',confidential='yes',nope='nope')))
 
 def count_words(sections) -> int:
-    return sum(len(s) for s in sections.keys())
+    return len(' '.join(list(s.values())[0] for s in sections).split())
 
-# print(count_words(create_report('code review','bugs','refactoring',version='3.0',confidential='yes')['sections']))  
+# print(count_words(create_report('code review',*sections,version='3.0',confidential='yes')['sections']))
 
+#Part F - 6
 
-#Part G 
+meta_data1 = {'version' : '3.5','confidential' : 'yes', 'author' : 'Daniel', 'invalid' : 'ignored'}
+meta_data2 = {'department' : 'production', 'author' : 'Daniel', 'date' : '260915', 'skip' : 'yes'}
+
+# print(summarize_report(create_report('code review',*sections,**meta_data1)))
+# print(summarize_report(create_report('code review',*sections,**meta_data2)))
+
+#Part F - 7
+# summarize_report() ignores non valid meta data by : for key, val in rest.items() if key in meta_data_fields
+
+# print(summarize_report(create_report('code review',*sections,version='3.0',confidential='yes',nope='nope')))
+
+#Part G - 1-3
 defaults = {'on' : True, 'darkmode' : True, 'charged': True}
 
-def merge_settings(defaults,**overrides):
+def merge_settings(defaults,**overrides) -> dict:
     new_sett = defaults
     new_sett.update(overrides)
     return new_sett
 
-print(merge_settings(defaults,on=False))
+# print(merge_settings(defaults,on=False))
 
-def call_summary(function_name,*args,**kwargs):
-    return (    f'{function_name}(' + ','.join(f'{a}' for a in args) + 
-                ',' + ','.join(f'{key}={val}' for key,val in kwargs.items()) + ')'
+def call_summary(function_name,*args,**kwargs) -> str:
+    return (    f'{function_name}({','.join(f'{a}' for a in args)}' + 
+                f',{','.join(f'{key}={val}' for key,val in kwargs.items())})'
     )
 
-# print(call_summary('call_summary',1,2,3,override=True,run=False,halt=True))
+# print(call_summary('function_name',1,2,3,override=True,run=False,halt=True))
+
+numbers = [10,20,50,15,18,78]
+
+def flexible_statistics(*numbers) -> str:
+    return( f'count: {len(numbers)}\n'+
+            f'total: {sum(numbers)}\n'+
+            f'average: {sum(numbers)/len(numbers)}\n'+
+            f'min: {min(numbers)}\n'+
+            f'max: {max(numbers)}'
+    )
+
+# print(flexible_statistics(*numbers))
+
+#Part G - 4
+num = 5
+
+class Student:
+    num_students = 0
+
+    def __init__(self,name,city):
+        self.name = name
+        self.city = city
+        Student.num_students += 1   #num_students reachable and modifiable through class.variable
+        self.id = str(Student.num_students)+name.lower()
+
+    def print_info(self):
+        print(f'Name: {self.name} ID: {self.id} City: {self.city}')
+        # print(num_students)   #num_students not reachable in nested function
+        # print(num)            #num reachable - global scope
+        # print(self.name)      #self object reachable passed in as argument - local scope
+        # print(dude)           #dude reachable - global scope and assigned under function
+
+dude = Student('Daniel','Gothenburg')
+
+# print(Student.num_students)   #num.students inside class reachable through Student.num_students
+# dude.print_info()             #class method reachable as dude.print_info()
+
+        
 
 
 
