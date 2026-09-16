@@ -189,8 +189,73 @@ def sort_product_price(products):
     
 # print(*sort_product_price(product_dict),sep='\n')
 
+names_dicts = [ {'first_name' : 'Daniel', 'last_name' : 'Nilsson'},
+                {'first_name' : 'Bob', 'last_name' : 'Builder'},
+                {'first_name' : 'Linda', 'last_name' : 'Namesson'},
+                {'first_name' : 'Adam', 'last_name' : 'Adamsson'}
+            ]
 #Part E - 4
+def sort_names(names):
+    return sorted(names,key=lambda p: p['last_name'])
 
+# print(*sort_names(names_dicts),sep='\n')
+
+#Part E - 5
+def sort_normal(names):
+    None
+
+
+#Part F - 1
+messy_products = [
+    {'product_name' : 'SoFa  ', 'category' : 'FuRnItUre', 'price' : 20000, 'stock' : 15},
+    {'product_name' : 'TaBlE', 'category' : 'furni TURE', 'price' : 10000, 'stock' : 15},
+    {'product_name' : 'dishWASHer', 'category' : 'APPL i ANce', 'price' : 8000, 'stock' : 25},
+    {'product_name' : 'stOVE', 'category' : 'appliance', 'price' : 15000, 'stock' : 25},
+    {'product_name' : 'micROwaVE', 'category' : 'APPLIANCE', 'price' : 1500, 'stock' : 0},
+    {'product_name' : 'BACKPACK', 'category' : 'outD O O R', 'price' : 1000, 'stock' : 250},
+    {'product_name' : 'shO   ES', 'category' : 'F o o T wear', 'price' : 1000, 'stock' : 300},
+    {'product_name' : 'sh I R T', 'category' : 'CLOTHES', 'price' : 500, 'stock' : 200},
+    {'product_name' : 'BELT', 'category' : 'clothes', 'price' : 300, 'stock' : 150},
+    {'product_name' : 'jeans', 'category' : 'clo TH ES', 'price' : 800, 'stock' : 100},
+    {'product_name' : 'JaCkEt', 'category' : 'outDOOR', 'price' : 2000, 'stock' : 50},
+    {'product_name' : 'UMbrELLa', 'category' : 'OUT door', 'price' : 200, 'stock' : 150}
+]
+
+#Part F - 2
+'''I needed to take some fresh air after this one. Impossible is nothing'''
+cleaned_products = [{key:val.replace(' ','').lower().capitalize() if isinstance(val,str) else val for key,val in d.items()} for d in messy_products]
+
+# print(cleaned_products)
+
+#Part F - 3
+instock_products = [d for d in cleaned_products if d['stock']]
+
+# print(instock_products)
+
+#Part F - 4
+categories = set([d['category'] for d in cleaned_products])
+
+# print(categories)
+
+#Part F - 5
+inventory_value = {p['product_name'] : p['price'] * p['stock'] for p in instock_products}
+
+# print(inventory_value)
+
+#Part F - 6
+sorted_by_inv_value = dict(sorted(inventory_value.items(),key=lambda item: item[1],reverse=True))
+
+# print(sorted_by_inv_value)
+
+#Part F - 7
+ranked_invetory_value = [f'{'{:<3}'.format(i+1)}. {'{:<15}'.format(d)} : {inventory_value[d]} SEK' for i,d in enumerate(sorted_by_inv_value)]
+
+# print(*ranked_invetory_value,sep='\n')
+
+#Part F - 8
+zipped_up = []
+
+#Part F - 9
 
 
 
