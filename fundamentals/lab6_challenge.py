@@ -87,13 +87,58 @@ names_alphabetic = sorted(cleaned_players,key=lambda p: p['player_name'])
 #Part 7
 
 player_rankings = sorted(zip(player_names,ranking),key=lambda t: t[1],reverse=True)
+ranked_numbered_strings = [f'{'{:<3}'.format(i)}. {'{:<10}'.format(name)} - {points} points' for i,(name,points) in enumerate(player_rankings,start=1)]
+wins_rankings = sorted(player_to_wins.items(),key=lambda p: p[1],reverse=True)
+wins_numbered_strings = [f'{'{:<3}'.format(i)}. {'{:<10}'.format(name)} - {wins} wins' for i,(name,wins) in enumerate(wins_rankings,start=1)]
+
 
 def print_leaderboard():
     print(  f'TOURNAMENT LEADERBOARD\n',
-            *[f'{'{:<3}'.format(i)}. {'{:<10}'.format(name)} - {points} points' for i,(name,points) in enumerate(player_rankings,start=1)],
+            *ranked_numbered_strings,
             sep='\n'
     )
 
-print_leaderboard()
+# print_leaderboard()
 
 #Part 8
+teams_players = {team : {d['player_name'] for d in cleaned_players if d['team'] == team} for team in teams}
+# print(teams_players)
+
+players_5_wins = {d['player_name'] : d['wins'] for d in cleaned_players if d['wins'] >= 5}
+# print(players_5_wins)
+
+represented_teams = set([d['team'] for d in cleaned_players])
+# print(represented_teams)
+
+represented_countries = set([d['country'] for d in cleaned_players])
+# print(represented_countries)
+
+active_highscore = {d['player_name'] : d['score'] for d in cleaned_players if d['score'] >= 100}
+# print(active_highscore)
+
+#Part 9
+player_performance = {d['player_name'] : d['score'] + 100 * d['wins'] / d['matches_played'] for d in cleaned_players}
+sorted_player_performance = dict(sorted(player_performance.items(),key=lambda p: p[1],reverse=True))
+players_ranked_performance = {d['player_name'] : player_performance[d['player_name']] for d in cleaned_players if player_performance[d['player_name']] >= 200}
+sorted_ranked_performance = dict(sorted(players_ranked_performance.items(),key=lambda p: p[1],reverse=True))
+
+# print(sorted_player_performance)
+# print(sorted_ranked_performance)
+
+#Part 10
+
+def final_report() -> [str]:
+    return [f'LE BIG TOURNAMENT REPORT\n{'='*24}',
+            f'Total # of Players: {len(cleaned_players)}',      
+            f'Number of active Players: {len(active_players)}',
+            f'Unique Teams: {', '.join(teams)}',
+            f'Unique Contries: {', '.join(countries)}',
+            f'Players Ranked by Score:',
+            *ranked_numbered_strings,
+            f'Players Ranked by Wins:',
+            *wins_numbered_strings,
+            f'Top 5 Players: {', '.join(list(sorted_player_performance)[:5])}',
+            f'Players Performing Well: {', '.join(playername_100_score['good_players'])}'
+    ]
+
+# print(*final_report(),sep='\n')
