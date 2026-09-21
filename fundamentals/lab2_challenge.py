@@ -53,6 +53,37 @@ sessions[7].update({'difficulty' : 'Advanced'})
 # print(*sessions,sep='\n')
 # print(*registered_part,sep='\n')
 
+#Part 4
+#AI halucinating about workshops
+
+#Part 5
+conference_data = {
+    '1995-04-10' : {'opening_time' : '08:00', 'closing_time' : '18:00', 
+    'session_time_slots' : ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00']}
+}
+
+session_slots_on_date = conference_data['1995-04-10']['session_time_slots']
+# print(session_slots_on_date)
+session_open_close_on_date = (conference_data['1995-04-10']['opening_time'],conference_data['1995-04-10']['closing_time'])
+# print(session_open_close_on_date)
+
+#Part 6
+
+backup_participants = registered_part
+# print(backup_participants)
+# del backup_participants[0]
+# print(registered_part)
+
+#backup_participants refer to the value in registered_part and changes to it will change the value
+
+backup_participants = registered_part.copy() # or [*registered_part]
+# print(backup_participants)
+backup_participants.clear()
+# print(backup_participants)
+# print(registered_part)
+
+#This creates an actual copy of the list and wont change the original value
+
 #Part 7
 
 session_titles = ['Python for AI', 'Building APIs', 'Introduction to LLMs']
@@ -62,5 +93,20 @@ combined_sessions = list(zip(session_titles,speakers,rooms))
 
 # print(f'Second session title: {combined_sessions[1][0]} speaker: {combined_sessions[1][1]} room: {combined_sessions[1][2]}')
 
+#Final Challenge
 
+the_conference = {
+    'conference_data' : conference_data,    #dict
+    'session_data' : {
+        'sessions' : sessions,  #list of dict
+        'speakers' : speakers,  #set
+        'rooms' : rooms,    #set
+        'participants' : registered_part,   #list of tuple
+        'topics' : topics   #set
+        }
+}
+
+# print(the_conference['session_data']['sessions'][1]['speaker'])
+
+#It just works TM
 
