@@ -140,12 +140,16 @@ prod3.tax_rate = 0.45
 #Part D 1-6
 
 class Student:
-    def __init__(self,name,score):
+    def __init__(self,name,score,active=True):
         self.name = name
         self.score = score
 
     def get_status(self):
         return 'PASS' if self.score >= 70 else 'FAIL'
+
+    def update_score(self,score):
+        if score < 1 or score > 100: raise ValueError('score must be in range 1-100')
+        self.score = score
 
 students = [
     Student('Bob',100),
@@ -164,18 +168,27 @@ students = [
 #Part E 1-7
 
 class Teacher:
-    def __init__(self,name):
+    def __init__(self,name,bearded=True):
         self.name = name
 
 class Course:
     students = []
 
-    def __init__(self,name,teacher):
+    def __init__(self,name,teacher,running=True):
         self.name = name
         self.teacher = teacher
     
     def add_student(self,student):
         self.students.append(student)
+
+    def student_count(self) -> int:
+        return len(students)
+
+    def passed_students(self) -> [Student]:
+        return [s for s in students if s.get_status() == 'PASS']
+
+    def students_above_score(self,threshold) -> [Student]:
+        return [s for s in students if s.score >= threshold]
 
 teacher = Teacher('Göran')
 course = Course('Python for Dummies',teacher)
@@ -184,12 +197,33 @@ course = Course('Python for Dummies',teacher)
 for s in students: course.add_student(s)
 # print(*[s.name for s in course.students])
 
-#Part F 1   
+#Part F 1-10
+#All implementation in Part D-E
 
+# print(course.student_count())
+# print(*[s.name for s in course.passed_students()])
 
+def print_course_summary(Course):
+    print(*[
+        f'Course Name: {course.name}',
+        f'Teacher Name: {course.teacher.name}',
+        f'Number of Students: {course.student_count()}',
+        f'Students with PASS grade:',
+        ', '.join([s.name for s in course.passed_students()])
+    ],sep='\n')
 
+# print_course_summary(course)
 
-#Part F
+#Part G 1
+#Implementation in Part D-E
 
+print(*[s.name for s in course.students_above_score(90)])
 
-#Part G
+'''
+Student.active
+Teacher.bearded
+Course.running
+
+all these attributes describe the state for the individual object
+and maybe be attributes of interest for all objects equally
+'''
