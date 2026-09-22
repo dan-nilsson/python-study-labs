@@ -113,17 +113,80 @@ task3 = Task('Second Task')
 task2.complete()
 # print(task2.title,task2.completed,task3.title,task3.completed)
 
+#Part C 1-6
+
+class Product:
+    tax_rate = 0.25
+
+    def __init__(self,name,price):
+        self.name = name
+        self.price = price
+
+    def price_with_tax(self):
+        return self.price * (1 + self.tax_rate)
+
+prod1 = Product('Laptop',20000)
+prod2 = Product('Coffe Maker',1500)
+prod3 = Product('Keyboard',800)
+
+# print(prod1.price_with_tax(),prod2.price_with_tax(),prod3.price_with_tax())
+Product.tax_rate = 0.35
+# print(prod1.price_with_tax(),prod2.price_with_tax(),prod3.price_with_tax())
+prod3.tax_rate = 0.45
+# print(prod1.price_with_tax(),prod2.price_with_tax(),prod3.price_with_tax())
+# print(Product.tax_rate)
+# print(prod3.tax_rate)
+
+#Part D 1-6
+
+class Student:
+    def __init__(self,name,score):
+        self.name = name
+        self.score = score
+
+    def get_status(self):
+        return 'PASS' if self.score >= 70 else 'FAIL'
+
+students = [
+    Student('Bob',100),
+    Student('Lisa',69),
+    Student('Mike',55),
+    Student('Harald',90),
+    Student('Håkan',78),
+    Student('Ylva',95)
+]
+
+# print(*[f'{s.name} {s.score}' for s in students],sep='\n')
+# print(*[f'{s.name} {s.get_status()}' for s in students],sep='\n')
+# 
+# print(*[f'{s.name}' for s in students if s.get_status() == 'PASS'])
+
+#Part E 1-7
+
+class Teacher:
+    def __init__(self,name):
+        self.name = name
+
+class Course:
+    students = []
+
+    def __init__(self,name,teacher):
+        self.name = name
+        self.teacher = teacher
+    
+    def add_student(self,student):
+        self.students.append(student)
+
+teacher = Teacher('Göran')
+course = Course('Python for Dummies',teacher)
+# print(course.name,course.teacher.name)
+
+for s in students: course.add_student(s)
+# print(*[s.name for s in course.students])
+
+#Part F 1   
 
 
-
-
-#Part C
-
-
-#Part D
-
-
-#Part E
 
 
 #Part F
