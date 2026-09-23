@@ -83,12 +83,91 @@ on it in a meaningful way
 
 #Part D
 
+class Employee:
+    def __init__(self,name):
+        self.name = name
+    
+    def get_information(self):
+        return f'Employee Name: {self.name}'
+
+class Developer(Employee):
+    def __init__(self,name,repo):
+        super().__init__(name)
+        self.repo = repo
+
+    def get_git_repo(self):
+        return f'{super().get_information()} Git: {self.repo}'
+
+class Manager(Employee):
+    pass
+
+manager = Manager('Therese')
+developer = Developer('Bob','github.com/bob')
+
+# print(manager.get_information())
+# print(developer.get_git_repo())
+# print(manager.get_git_repo())     #does not work - can't use methods of other sub-classes eventhough shared super-class
 
 #Part E
+
+class Device:
+    def __init__(self,brand,year,is_active=True):
+        self.brand = brand
+        self.year = year
+        self.is_active = is_active
+        if year < 0: raise ValueError('year cannot be negative!')
+
+class Laptop(Device):
+    def __init__(self,brand,year,ram_gb,is_active=True):
+        super().__init__(brand,year,is_active)
+        self.ram_gb = ram_gb
+
+class Monitor(Device):
+    def __init__(self,brand,year,size,is_active=True):
+        super().__init__(brand,year,is_active)
+        self.size = size
+
+laptop = Laptop('IBM',2022,32)
+monitor = Monitor('Asus',2018,26)
+
+# print(laptop.brand,laptop.year,laptop.ram_gb,laptop.is_active)
+# print(monitor.brand,monitor.year,monitor.size,monitor.is_active)
 
 
 #Part F
 
+class Notification:
+    def __init__(self,message):
+        self.message = message
+
+    def send(self):
+        return self.message
+
+class EmailNotification(Notification):
+    def __init__(self,message,email):
+        super().__init__(message)
+        self.email = email
+
+    def send(self):
+        return f'Email: {self.message}'
+
+class SMSNotification(Notification):
+    def __init__(self,message,number):
+        super().__init__(message)
+        self.number = number
+
+    def send(self):
+        return f'SMS: {self.message}'
+
+notis = Notification('Hello')
+email = EmailNotification('Hello','bob@yahoo.com')
+sms = SMSNotification('Hello','555-555111')
+
+print(notis.send(),email.send(),sms.send())
+
+'''
+The method = sub-class if override else super-class
+'''
 
 #Part G
 
