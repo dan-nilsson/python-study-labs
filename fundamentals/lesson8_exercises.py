@@ -163,7 +163,7 @@ notis = Notification('Hello')
 email = EmailNotification('Hello','bob@yahoo.com')
 sms = SMSNotification('Hello','555-555111')
 
-print(notis.send(),email.send(),sms.send())
+# print(notis.send(),email.send(),sms.send())
 
 '''
 The method = sub-class if override else super-class
@@ -171,5 +171,81 @@ The method = sub-class if override else super-class
 
 #Part G
 
+class Report:
+    def __init__(self,report):
+        self.report = report
+
+    def get_summary(self):
+        return self.report
+
+class SalesReport(Report):
+    def __init__(self,report,sales_numbers):
+        super().__init__(report)
+        self.sales_numbers = sales_numbers
+
+    def get_summary(self):
+        return f'{super().get_summary()} : {self.sales_numbers}'
+
+sales = SalesReport('report','many sales,much monies')
+
+# print(sales.get_summary())
+
 
 #Part H
+
+class User:
+    def __init__(self,username,email,online=False):
+        self.username = username
+        self.email = email
+        self.online = online
+    
+    def get_email(self):
+        return self.email
+
+    def login(self):
+        self.online = True
+        return 'ONLINE'
+
+    def logout(self):
+        self.online = False
+        return 'OFFLINE'
+
+class AdminUser(User):
+    def __init__(self,username,email,access):
+        super().__init__(username,email)
+        self.access = access
+        if access < 0: raise ValueError('access cannot be a negative number')
+
+    def login(self):
+        if self.access >= 5: return super().login()
+        else: return super().logout()
+
+class PremiumUser(User):
+    def __init__(self,username,email,premiumness):
+        super().__init__(username,email)
+        self.premiumness = premiumness
+        if premiumness < 0: raise ValueError('premiumness cannot be a negative number')
+
+    def login(self):
+        return super().login()
+
+user = User('bob','bob@yahoo.com')
+admin = AdminUser('eric','eric@proton.me',10)
+premium = PremiumUser('linda','linda@outlook.com',15)
+
+# print(
+    # user.login(),
+    # admin.login(),
+    # sep='\n'
+# )
+# admin.access = 4
+# print(
+    # admin.login(),
+    # premium.login(),
+    # sep='\n'
+# )
+
+'''
+AdminUser and PremiumUser is-a User because they share all the base behaviour of the super-class
+but have different specific additional edge behaviour
+'''
