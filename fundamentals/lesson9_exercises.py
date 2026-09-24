@@ -215,11 +215,17 @@ class SummaryExporter(Exporter):
     def __str__(self):
         return f'Summary Exporter'
 
+class FilePath:
+    def __init__(self,path):
+        self.path = path
+
+path = FilePath('C:\Windows\system32\cmd.exe')
+
 exporters = [
-    Exporter(),
-    ConsoleExporter(),
-    TextExporter(),
-    SummaryExporter()
+    Exporter(path),
+    ConsoleExporter(path),
+    TextExporter(path),
+    SummaryExporter(path)
 ]
 
 # print(*[e for e in exporters],sep='\n')
@@ -237,11 +243,8 @@ notexp = NotExporter()
 # print(*[e.export(data) for e in exporters],notexp.export(data),sep='\n')
 # print(*[isinstance(e,Exporter) for e in exporters],isinstance(notexp,Exporter),sep='\n')
 
-class FilePath:
-    def __init__(self,path):
-        self.path = path
-
 '''
 I couldn't think of a good composition.
+Exporter has-a FilePath for the various ways of exporting the data.
 We're just going to have to pretend this was a great idea.
 '''
