@@ -82,7 +82,7 @@ class Display:
 
 printer_displays = [Printer('Canon'),Display('Asus'),Printer('HP'),Display('LG')]
 
-print(*[pd.display_status() for pd in printer_displays],sep='\n')
+# print(*[pd.display_status() for pd in printer_displays],sep='\n')
 
 '''
 You can call methods on various different types regardless as long as they have the needed behaviour.
@@ -91,12 +91,65 @@ As long as they all quack.
 
 #Part D
 
+class User:
+    def __init__(self,name):
+        self.name = name
+
+class AdminUser(User):
+    pass
+
+admin = AdminUser('Bob')
+
+# print(isinstance(admin,AdminUser),isinstance(admin,User),isinstance(admin,str))
+
+'''
+The object instance admin is both it's distinct sub-class AdminUser aswell as it's super-class User
+'''
 
 #Part E
 
+class Product:
+    def __init__(self,name,price):
+        self.name = name
+        self.price = price
+
+    def __str__(self):
+        return f'Product Name: {self.name} Price: {self.price}'
+
+prod = Product('Good',100)
+
+# print(prod)     # <__main__.Product object at 0x7fcac51916a0>
+
+products = [Product('Bike',10000),Product('Car',300000),Product('Truck',400000)]
+
+# print(*[p for p in products],sep='\n')
+
+prod_str = str(prod)
+
+# print(type(prod_str),isinstance(prod_str,str))
 
 #Part F
 
+class Account:
+    def __init__(self,owner,balance):
+        self.owner = owner
+        self.balance = balance
+
+    def __str__(self):
+        return f'Account Owner: {self.owner} Account Balance: {self.balance}'
+
+class SavingsAccount(Account):
+    def __init__(self,owner,balance,interest_rate):
+        super().__init__(owner,balance)
+        self.interest_rate = interest_rate
+
+    def __str__(self):
+        return f'{super().__str__()} Interest Rate: {self.interest_rate}'
+
+acc = Account('Bob',5000)
+saveacc = SavingsAccount('Linda',8000,0.15)
+
+# print(acc,saveacc,sep='\n')
 
 #Part G
 
