@@ -153,5 +153,95 @@ saveacc = SavingsAccount('Linda',8000,0.15)
 
 #Part G
 
+class CPU:
+    def __init__(self,brand):
+        self.brand = brand
+
+class Computer:
+    def __init__(self,brand,cpu):
+        self.brand = brand
+        self.cpu = cpu
+
+cpu = CPU('Intel')
+computer = Computer('IBM',cpu)
+
+# print(computer.brand,computer.cpu.brand)
+
+'''
+Computer has-a CPU makes more sense since they wont share all behaviour
+'''
+
+'''
+Car/Engine - composition. Car has-a Engine
+Manager/Employee - both/depends, Manager is-a Employee, but also Manager has-a Employee
+- in the sense that they manage the Employee.
+- would both be sub-class Employee with attribute list of managed Employee
+Course/Teacher - composition - Course has-a Teacher
+Phone/Device - inheritence - Phone is-a Device
+ '''
 
 #Part H
+
+data = 'bish bash bosh'
+
+class Exporter:
+    def __init__(self,path):
+        self.path = path
+
+    def export(self,data):
+        return f'Standard Export: {data}'
+
+    def __str__(self):
+        return f'Exporter'
+
+class ConsoleExporter(Exporter):
+    def export(self,data):
+        return f'Console: {data}'
+
+    def __str__(self):
+        return f'Console Exporter'
+
+class TextExporter(Exporter):
+    def export(self,data):
+        return f'Text: {data}'
+
+    def __str__(self):
+        return f'Text Exporter'
+
+class SummaryExporter(Exporter):
+    def export(self,data):
+        return f'Summary: {data}'
+
+    def __str__(self):
+        return f'Summary Exporter'
+
+exporters = [
+    Exporter(),
+    ConsoleExporter(),
+    TextExporter(),
+    SummaryExporter()
+]
+
+# print(*[e for e in exporters],sep='\n')
+# print(*[e.export(data) for e in exporters],sep='\n')
+
+class NotExporter:
+    def __init__(self):
+        pass
+
+    def export(self,data):
+        return f'Not Exporter: {data}'
+
+notexp = NotExporter()
+
+# print(*[e.export(data) for e in exporters],notexp.export(data),sep='\n')
+# print(*[isinstance(e,Exporter) for e in exporters],isinstance(notexp,Exporter),sep='\n')
+
+class FilePath:
+    def __init__(self,path):
+        self.path = path
+
+'''
+I couldn't think of a good composition.
+We're just going to have to pretend this was a great idea.
+'''
