@@ -3,7 +3,7 @@
 Collection of labs and various projects from the course System Developer - Python & AI
 
 ## Course Sections
-- [Fundamentals](#fundamentals)
+- [Python Fundamentals](#fundamentals)
 - [Fundamentals Project](#fundamentals-project)
 - [SQL & Databases](#sql-databases)
 - [API, System Integration & Git/Scrum](#api-integration-git-scrum)
@@ -15,7 +15,7 @@ Collection of labs and various projects from the course System Developer - Pytho
 - [Project LLM & Prompt?](#project-llm-prompt)
 - [Deployment, Docker, Azure & CI/CD](#deployment-docker-azure)
 - [AI Agents & Automation](#agents-automation)
-- [AI Secutity & GDPR](#ai-security-gdpr)
+- [AI Security & GDPR](#ai-security-gdpr)
 - [Final Project](#final-project)
 
 ## Course Provider : Lexicon
