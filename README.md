@@ -18,6 +18,6 @@ Collection of labs and various projects from the course System Developer - Pytho
 - [AI Security & GDPR](#ai-security-gdpr)
 - [Final Project](#final-project)
 
-## Course Provider : Lexicon
+## Course Provider
 Lexicon AB - https://lexicongruppen.se/
 
