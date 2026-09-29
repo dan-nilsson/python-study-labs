@@ -2,8 +2,8 @@
 Collection of labs and various projects from the course System Developer - Python & AI
 
 ## Course Sections
-- [Python Fundamentals](#fundamentals)
-- [Fundamentals Project](#fundamentals-project)
+- [Python Fundamentals](./fundamentals)
+- [Fundamentals Project](./fundamentals-project)
 - [SQL & Databases](#sql-databases)
 - [API, System Integration & Git/Scrum](#api-integration-git-scrum)
 - [Team Project](#team-project)
