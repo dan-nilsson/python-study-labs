@@ -1,4 +1,3 @@
-```markdown
 # System Developer - Python & AI
 Collection of labs and various projects from the course System Developer - Python & AI
 
