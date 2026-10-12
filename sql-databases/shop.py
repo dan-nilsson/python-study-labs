@@ -60,10 +60,10 @@ def get_receipt(conn):
 
 def best_sellers(conn):
     cursor = conn.execute(
-        "SELECT p.name, COUNT(oi.product_id) AS sold "
+        "SELECT p.name, SUM(oi.quantity) AS sold "
         "FROM order_items oi "
         "JOIN products p ON oi.product_id = p.product_id "
-        "GROUP BY p.name "
+        "GROUP BY oi.product_id "
         "ORDER BY sold DESC LIMIT 3")
     conn.commit()
     lines = [f'{i}. {name:<20} {sold:>3}' for i,(name,sold) in enumerate(cursor.fetchall(),1)]
