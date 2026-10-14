@@ -6,8 +6,9 @@ from pymongo import MongoClient
 from pprint import pprint
 from datetime import datetime
 
-client = MongoClient('mongodb://localhost:27018')
-db = client['webshop']
+from dbtools import mongodb_connect,mongodb_seed
+
+db = mongodb_connect()
 
 #Ex1
 def find_price_gt_1000():
@@ -85,4 +86,4 @@ def delete_new_before_date(date):
     result = db.orders.delete_many({'status': 'new', 'order_date': {'$lt': date}})
     print(result.deleted_count)
 
-delete_new_before_date(datetime(2026,3,20))
+# delete_new_before_date(datetime(2026,3,20))

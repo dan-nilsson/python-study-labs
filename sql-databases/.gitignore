@@ -1,3 +1,6 @@
 webshop.db
 webshop_reset.sql
 seed_webshop.py
+.config
+config.json
+__pycache__
