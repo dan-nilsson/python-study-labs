@@ -79,3 +79,10 @@ def rain_jacket_updates():
 # rain_jacket_updates()
 
 #Ex10
+def delete_new_before_date(date):
+    result = db.orders.find({'status': 'new', 'order_date': {'$lt': date}})
+    print(*[f'{doc.get('_id'):<3} {doc.get('order_date')}' for doc in result])
+    result = db.orders.delete_many({'status': 'new', 'order_date': {'$lt': date}})
+    print(result.deleted_count)
+
+delete_new_before_date(datetime(2026,3,20))
