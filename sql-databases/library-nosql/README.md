@@ -1,7 +1,7 @@
 # Library NoSQL Lab
 
 ## Database Schema
-- members: name, email (unique), join_date
-- books: title, author, year, genre, num_copies
-- reviews: member_id, rating
-- borrowings: member, book, borrow_date, return_date
+- members: _id: int, first_name: str, last_name: str, email: str (unique), city: srt, joined: datetime
+- books: _id: int, title: str, author: str, year: int, genres: list, available: int
+- reviews: _id: int, member: int, rating: int
+- borrowings: _id: int, member: int, book: int, borrowed: datetime, returned: datetime

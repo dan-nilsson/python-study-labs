@@ -5,10 +5,10 @@ Lab-Extra Library impl MongoDB NoSQL
 import pymongo
 from dbtools import mongodb_connect, mongodb_seed
 
-from seed_library import books
+from seed_library import books, members
 from library import library_menu
 
-seed_data = [('books',books)]
+seed_data = [('books',books),('members',members)]
 
 def main():
     db = mongodb_connect(name='library')
