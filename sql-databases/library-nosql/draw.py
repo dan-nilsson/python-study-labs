@@ -11,24 +11,30 @@ def draw_books(books) -> None:
     lines =[f'ID: {doc.get('_id')} Title: {doc.get('title')} Author: {doc.get('author')}' 
             f'Year: {doc.get('year')} Genres: {doc.get('genres')} available: {doc.get('available')}' 
             for doc in books]
-    draw_lines(lines)
+    draw_lines(lines,halt=True)
 
 def draw_members(members) -> None:
     lines =[f'ID: {doc.get('_id'):<3} Name: {f'{doc.get('first_name')} {doc.get('last_name')}':<15} '
             f'Email: {doc.get('email'):<25} City: {doc.get('city') if not doc.get('city') else f'{doc.get('city'):<10}'} '
             f'Joined: {doc.get('joined').date()}'
             for doc in members]
-    draw_lines(lines)
+    draw_lines(lines,halt=True)
 
 def draw_overdue(overdue) -> None:
     lines = [f'MemberID: {doc.get('member')} BookID: {doc.get('book')} Return by: {doc.get('return_by').date()}' for doc in overdue]
-    draw_lines(lines)
+    draw_lines(lines,halt=True)
 
-def draw_lines(lines):
+def draw_borrow(member,book,borrowed=0,overdue=0) -> None:
+    lines =[f'Member: {member} has borrowed book {book}. Borrowed: {borrowed+1}' if not overdue and borrowed < 3 else 
+            f'You are not allowed to borrow more books. Borrowed: {borrowed} Overdue: {overdue}']
+    draw_lines(lines,halt=True)
+
+def draw_lines(lines,halt=False):
     if lines:
         pad = 4 if len(lines) == 1 else 0
         draw_lines_aligned(lines,align='left',pad_side=2,width=120,pad_over=pad,pad_under=pad)
     else: draw_no_results()
+    if halt: input()
 
 def draw_no_results() -> None:
     draw_lines_aligned(['NO RESULTS FOUND'],pad_over=4,pad_under=4)
