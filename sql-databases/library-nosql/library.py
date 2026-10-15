@@ -1,4 +1,4 @@
-from draw import draw_menu, draw_books
+from draw import draw_menu, draw_books, draw_members
 
 def search_book(db,book):
     result = db.books.find()
@@ -13,7 +13,10 @@ def return_book(db,member,book):
     return
 
 def view_member(db,member):
-    return
+    result = db.members.find()
+    if member: result = db.members.find({'email': member})
+    draw_members(result)
+    input()
 
 def overdue_books(db):
     return
@@ -28,13 +31,14 @@ def library_menu(db):
         match input('>>> '):
             case '1':
                 search_book(db, 
-                    input('Enter Title, blank for all: ').lower().title())
+                    input('Enter title, blank for all: ').lower().title())
             case '2':
                 pass
             case '3':
                 pass
             case '4':
-                pass
+                view_member(db, 
+                    input('Enter email, blank for all: ').lower())
             case '5':
                 pass
             case '6':

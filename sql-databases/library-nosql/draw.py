@@ -12,9 +12,19 @@ def draw_books(books) -> None:
             f'Year: {doc.get('year')} Genres: {doc.get('genres')} available: {doc.get('available')}' 
             for doc in books]
     if lines:
-        draw_lines_aligned(lines,align='left',pad_side=2,width=120)
+        pad = 4 if len(lines) == 1 else 0
+        draw_lines_aligned(lines,align='left',pad_side=2,width=120,pad_over=pad,pad_under=pad)
     else: draw_no_results()
 
+def draw_members(members) -> None:
+    lines =[f'ID: {doc.get('_id'):<3} Name: {f'{doc.get('first_name')} {doc.get('last_name')}':<15} '
+            f'Email: {doc.get('email'):<25} City: {doc.get('city') if not doc.get('city') else f'{doc.get('city'):<10}'} '
+            f'Joined: {doc.get('joined').date()}'
+            for doc in members]
+    if lines:
+        pad = 4 if len(lines) == 1 else 0
+        draw_lines_aligned(lines,align='left',pad_side=2,width=120,pad_over=pad,pad_under=pad)
+    else: draw_no_results()
 
 def draw_no_results() -> None:
     draw_lines_aligned(['NO RESULTS FOUND'],pad_over=4,pad_under=4)
