@@ -6,9 +6,15 @@ from pymongo import MongoClient
 from pprint import pprint
 from datetime import datetime
 
+from seed_webshop import customers, products, orders
 from dbtools import mongodb_connect,mongodb_seed
 
+def seed_webshop(db):
+    webshop_data = [('customers',customers),('products',products),('orders',orders)]
+    mongodb_seed(db,webshop_data)
+
 db = mongodb_connect()
+# seed_webshop(db)
 
 #Ex1
 def find_price_gt_1000():

@@ -5,8 +5,6 @@ Database helpers and tools library
 from pymongo    import MongoClient
 import os, json, sqlite3
 
-from seed_webshop   import customers,products,orders
-
 base_dir = os.path.dirname(os.path.abspath(__file__))
 cfg_path = os.path.join(base_dir, 'config.json')
 
@@ -26,19 +24,14 @@ def mongodb_connect(name=cfg['mongodb'].get('name'),seed=False) -> MongoClient:
     if seed: mongodb_seed(db)
     return db
 
-def mongodb_seed(db):
-    collections = ['customers','products','orders']
-    for c in collections:
-        db[c].drop()
-
-    db.customers.insert_many(customers)
-    db.products.insert_many(products)
-    db.orders.insert_many(orders)
-
-    print('webshop is ready:',
-          db.customers.count_documents({}), 'customers,',
-          db.products.count_documents({}), 'products,',
-          db.orders.count_documents({}), 'orders')
+def mongodb_seed(db,data):
+    for col_name,_ in data:
+        db[col_name].drop()
+    for col_name,col_data in data:
+        db[col_name].insert_many(col_data)
+    print(f'database is ready')
+    for col_name,_ in data:
+        print(db[col_name].count_documents({}), col_name)
 
 def sanitize_input(*args) -> tuple:
     return (*args,)
