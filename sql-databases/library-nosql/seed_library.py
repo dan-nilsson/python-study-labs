@@ -2,7 +2,7 @@
 Library NoSQL Database Seed
 '''
 
-books: [
+books = [
     {'title': 'The Great Gatsby','author': 'F. Scott Fitzgerald','year': 1925,'genres': [],'available': 10},
     {'title': 'To Kill a Mockingbird','author': 'Harper Lee','year': 1960,'available': 10},
     {'title': '1984','author': 'George Orwell','year': 1949,'available': 10},
