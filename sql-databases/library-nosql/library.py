@@ -1,22 +1,28 @@
 from datetime import datetime, timedelta
 
+from dbtools import sanitize_input
+
 from draw import draw_menu, draw_books, draw_members, draw_overdue
 
 def search_book(db,book):
     result = db.books.find()
-    if book: result = db.books.find({'title': book})
+    if book: result = db.books.find({'title': {'$in': sanitize_input(book)}})
     draw_books(result)
     input()
 
 def borrow_book(db,member,book):
-    return
+    result = db.borrowings.insert_one({
+        'member': sanitize_input(member), 'book': sanitize_input(book),
+        'borrowed': datetime.now(), 'return_by': datetime.now() + timedelta(days=14), 'returned': None})
 
 def return_book(db,member,book):
-    return
+    result = db.borrowings.update_one(
+        {'member': {'$in': sanitize_input(member)}, 'book': {'$in': sanitize_input(book)}},
+        {'returned': datetime.now()})
 
 def view_member(db,member):
     result = db.members.find()
-    if member: result = db.members.find({'email': member})
+    if member: result = db.members.find({'email': {'$in': sanitize_input(member)}})
     draw_members(result)
     input()
 
@@ -27,7 +33,7 @@ def overdue_books(db):
 
 def validate_borrow(db,member):
     #max 3 borrowed and none overdue
-    result = db.borrowings.find({'member': member})
+    result = db.borrowings.find({'member': {'$in': sanitize_input(member)}})
 
 def library_menu(db):
     while True:
@@ -38,12 +44,16 @@ def library_menu(db):
                 search_book(db, 
                     input('Enter title, blank for all: ').lower().title())
             case '2':
-                pass
+                borrow_book(db,
+                    input('MemberID: '),
+                    input('BookID: '))
             case '3':
-                pass
+                return_book(db,
+                    input('MemberID: '),
+                    input('BookID: '))
             case '4':
                 view_member(db, 
-                    input('Enter email, blank for all: ').lower())
+                    input('Enter email, blank for all: ').lower().strip())
             case '5':
                 overdue_books(db)
             case '6':
