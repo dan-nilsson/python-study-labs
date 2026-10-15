@@ -19,10 +19,10 @@ def sqlite_connect(cfg=cfg,fk=True) -> Connection:
     if fk: conn.execute('PRAGMA foreign_keys = ON')
     return conn
 
-def mongodb_connect(cfg=cfg,seed=False) -> MongoClient:
+def mongodb_connect(name=cfg['mongodb'].get('name'),seed=False) -> MongoClient:
     cfg_mongodb = cfg['mongodb']
     client = MongoClient(f'mongodb://{cfg_mongodb.get('host')}:{cfg_mongodb.get('port')}')
-    db = client[cfg_mongodb.get('name')]
+    db = client[name]
     if seed: mongodb_seed(db)
     return db
 
