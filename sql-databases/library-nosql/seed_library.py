@@ -1,7 +1,9 @@
 '''
 Library NoSQL Database Seed
 '''
-from datetime import datetime
+from datetime import datetime, timedelta
+
+delta = timedelta(days=14)
 
 books = [
     {'_id': 1,'title': 'The Great Gatsby','author': 'F. Scott Fitzgerald','year': 1925,'genres': [],'available': 10},
@@ -38,4 +40,8 @@ members = [
     {'_id': 8, 'first_name': 'Oskar', 'last_name': 'Persson', 'email': 'oskar.p@example.com', 'city': 'Uppsala', 'joined': datetime(2025, 5, 28)},
     {'_id': 9, 'first_name': 'Fatima', 'last_name': 'Yilmaz', 'email': 'fatima.y@example.com', 'city': 'Göteborg', 'joined': datetime(2024, 12, 1)},
     {'_id': 10, 'first_name': 'Lukas', 'last_name': 'Ek', 'email': 'lukas.ek@example.com', 'joined': datetime(2026, 1, 9)}
+]
+
+borrowings = [
+    {'_id': 1, 'member': 1, 'book': 1, 'borrowed': datetime(2026,3,1), 'return_by': datetime(2026,3,1)+delta, 'returned': None}
 ]

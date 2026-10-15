@@ -1,4 +1,6 @@
-from draw import draw_menu, draw_books, draw_members
+from datetime import datetime, timedelta
+
+from draw import draw_menu, draw_books, draw_members, draw_overdue
 
 def search_book(db,book):
     result = db.books.find()
@@ -19,10 +21,13 @@ def view_member(db,member):
     input()
 
 def overdue_books(db):
-    return
+    result = db.borrowings.find({'returned': {'$eq': None}, 'return_by' : {'$lt': datetime.now()}})
+    draw_overdue(result)
+    input()
 
 def validate_borrow(db,member):
-    return True
+    #max 3 borrowed and none overdue
+    result = db.borrowings.find({'member': member})
 
 def library_menu(db):
     while True:
@@ -40,7 +45,7 @@ def library_menu(db):
                 view_member(db, 
                     input('Enter email, blank for all: ').lower())
             case '5':
-                pass
+                overdue_books(db)
             case '6':
                 quit()
             case '_':

@@ -1,4 +1,4 @@
-import os, time
+import os, time, datetime
 
 menu_width = 100
 menu_options = ['LIBRARY','1. search books 2. borrow book', '3. return book 4. member profiles', '5. overdue books 6. EXIT']
@@ -11,16 +11,20 @@ def draw_books(books) -> None:
     lines =[f'ID: {doc.get('_id')} Title: {doc.get('title')} Author: {doc.get('author')}' 
             f'Year: {doc.get('year')} Genres: {doc.get('genres')} available: {doc.get('available')}' 
             for doc in books]
-    if lines:
-        pad = 4 if len(lines) == 1 else 0
-        draw_lines_aligned(lines,align='left',pad_side=2,width=120,pad_over=pad,pad_under=pad)
-    else: draw_no_results()
+    draw_lines(lines)
 
 def draw_members(members) -> None:
     lines =[f'ID: {doc.get('_id'):<3} Name: {f'{doc.get('first_name')} {doc.get('last_name')}':<15} '
             f'Email: {doc.get('email'):<25} City: {doc.get('city') if not doc.get('city') else f'{doc.get('city'):<10}'} '
             f'Joined: {doc.get('joined').date()}'
             for doc in members]
+    draw_lines(lines)
+
+def draw_overdue(overdue) -> None:
+    lines = [f'MemberID: {doc.get('member')} BookID: {doc.get('book')} Return by: {doc.get('return_by').date()}' for doc in overdue]
+    draw_lines(lines)
+
+def draw_lines(lines):
     if lines:
         pad = 4 if len(lines) == 1 else 0
         draw_lines_aligned(lines,align='left',pad_side=2,width=120,pad_over=pad,pad_under=pad)
