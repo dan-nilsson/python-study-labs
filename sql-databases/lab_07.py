@@ -35,7 +35,7 @@ def orders_delivered():
 
 #Ex3
 def customers_sthlm_mlm():
-    result = db.customers.find({'city': {'$in': ['Stockholm','Malmlö']}})
+    result = db.customers.find({'city': {'$in': ['Stockholm','Malmö']}})
     print(*[f'Name: {doc.get('first_name')} {doc.get('last_name')}' for doc in result],sep='\n')
 
 # customers_sthlm_mlm()
