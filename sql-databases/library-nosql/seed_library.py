@@ -1,10 +1,13 @@
 '''
-Library NoSQL Database Seed
+Library NoSQL Database Seed & Validators
 '''
 from datetime import datetime, timedelta
 
 delta = timedelta(days=14)
 
+'''
+Seed data
+'''
 books = [
     {'_id': 1,'title': 'The Great Gatsby','author': 'F. Scott Fitzgerald','year': 1925,'genres': [],'available': 10},
     {'_id': 2,'title': 'To Kill a Mockingbird','author': 'Harper Lee','year': 1960,'available': 10},
@@ -49,7 +52,6 @@ borrowings = [
     {'_id': 4, 'member': 4, 'book': 1, 'borrowed': datetime(2026,9,1), 'return_by': datetime(2026,9,1)+delta, 'returned': None},
     {'_id': 5, 'member': 5, 'book': 2, 'borrowed': datetime(2026,10,1), 'return_by': datetime(2026,10,1)+delta, 'returned': None},
     {'_id': 6, 'member': 6, 'book': 3, 'borrowed': datetime(2026,10,10), 'return_by': datetime(2026,10,10)+delta, 'returned': None},
-
 ]
 
 reviews = [
@@ -60,3 +62,24 @@ reviews = [
     {'_id': 5, 'member': 5, 'book': 2, 'rating': 5},
     {'_id': 6, 'member': 6, 'book': 3, 'rating': 9}
 ]
+
+'''
+Validator
+'''
+vexpr_members = { "$jsonSchema": {
+    "bsonType": "object",
+    "required": [ "first_name", "last_name", "email"],
+    "properties": {
+        "first_name": {
+           "bsonType": "string",
+           "description": "must be a string and is required"
+        },
+        "last_name": {
+           "bsonType": "string",
+           "description": "must be a string and is required"
+        },
+        "email": {
+           "bsonType": "string",
+           "description": "must be a string and is required"
+        }
+}}}

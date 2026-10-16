@@ -32,6 +32,11 @@ def mongodb_seed(db,data):
     for col_name,_ in data:
         print(db[col_name].count_documents({}), col_name)
 
+def mongodb_validation(db,data):
+    for col_name, vexpr in data:
+        db.command( 'collMod',col_name, validator=vexpr,
+                   validationLevel='moderate', validationAction='warn')
+
 def sanitize_input(*args) -> tuple:
     return (*args,)
 
