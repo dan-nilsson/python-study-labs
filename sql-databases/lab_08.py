@@ -48,26 +48,57 @@ def city_members() -> None:
 
 # city_members()
 
-#Ex5
+#Ex5 hey, it works
 def products_minmax_price_items() -> None:
-    pipe = [{'$group': {'_id': '$category', 'min_price': {'$min': '$price'}, 'max_price': {'$max': '$price'}}}]
+    pipe = [{'$group': {'_id': '$category', 'min_price': {'$min': '$price'}, 'max_price': {'$max': '$price'},}},
+            {'$lookup': {'from': 'products', 'localField': 'min_price', 'foreignField': 'price', 'as': 'min_product'}},
+            {'$lookup': {'from': 'products', 'localField': 'max_price', 'foreignField': 'price', 'as': 'max_product'}}]
     result = db.products.aggregate(pipe)
-    print(*[doc for doc in result])
+    print(*[f'Category: {doc.get('_id'):<12} Low Price: {doc.get('min_product')[0].get('name'):<15} {doc.get('min_price'):>5} kr '
+            f'High Price: {doc.get('max_product')[0].get('name'):<15} {doc.get('max_price'):>5} kr' 
+            for doc in result],sep='\n')
 
-products_minmax_price_items()
-#just prices for now. will get names
+# products_minmax_price_items()
 
 #Ex6
+def customers_orders_over2() -> None:
+    pipe = [{'$group': {'_id': '$customer_id', 'count': {'$sum': 1}}},
+            {'$match': {'count': {'$gte': 2}}}]
+    result = db.orders.aggregate(pipe)
+    print(*[f'Customer: {doc.get('_id')} Orders: {doc.get('count')}' for doc in result],sep='\n')
 
+# customers_orders_over2()
 
 #Ex7
+def order_id_numitems() -> None:
+    pipe = [{'$project': {'items': {'$size': '$items'}}}]
+    result = db.orders.aggregate(pipe)
+    print(*[doc for doc in result],sep='\n')
 
+# order_id_numitems()
 
 #Ex8
 
+def sold_by_category() -> None:
+    pipe = [{'$match': {'status': {'$ne': 'cancelled'}}},
+            {'$unwind': '$items'},
+            {'$lookup': {'from': 'products', 'localField': 'items.product_id', 'foreignField': '_id', 'as': 'product'}},
+            {'$unwind': '$product'},
+            {'$group': {'_id': '$product.category', 'count': {'$sum': 1}}}]
+    result = db.orders.aggregate(pipe)
+    print(*[doc for doc in result],sep='\n')
+
+# sold_by_category()
 
 #Ex9
+def revenue_per_status() -> None:
+    pipe = [{'$unwind': '$items'},
+            {'$project': {'status': '$status', 'total': {'$multiply': ['$items.quantity','$items.unit_price']}}},
+            {'$group': {'_id': '$status', 'revenue': {'$sum': '$total'}}}]
+    result = db.orders.aggregate(pipe)
+    print(*[doc for doc in result],sep='\n')
 
+# revenue_per_status()
 
 #Ex10
 
