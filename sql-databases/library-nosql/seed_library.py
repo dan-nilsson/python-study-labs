@@ -43,5 +43,20 @@ members = [
 ]
 
 borrowings = [
-    {'_id': 1, 'member': 1, 'book': 1, 'borrowed': datetime(2026,3,1), 'return_by': datetime(2026,3,1)+delta, 'returned': None}
+    {'_id': 1, 'member': 1, 'book': 1, 'borrowed': datetime(2026,3,1), 'return_by': datetime(2026,3,1)+delta, 'returned': None},
+    {'_id': 2, 'member': 2, 'book': 2, 'borrowed': datetime(2026,5,1), 'return_by': datetime(2026,5,1)+delta, 'returned': None},
+    {'_id': 3, 'member': 3, 'book': 3, 'borrowed': datetime(2026,7,1), 'return_by': datetime(2026,7,1)+delta, 'returned': None},
+    {'_id': 4, 'member': 4, 'book': 1, 'borrowed': datetime(2026,9,1), 'return_by': datetime(2026,9,1)+delta, 'returned': None},
+    {'_id': 5, 'member': 5, 'book': 2, 'borrowed': datetime(2026,10,1), 'return_by': datetime(2026,10,1)+delta, 'returned': None},
+    {'_id': 6, 'member': 6, 'book': 3, 'borrowed': datetime(2026,10,10), 'return_by': datetime(2026,10,10)+delta, 'returned': None},
+
+]
+
+reviews = [
+    {'_id': 1, 'member': 1, 'book': 1, 'rating': 8},
+    {'_id': 2, 'member': 2, 'book': 2, 'rating': 4},
+    {'_id': 3, 'member': 3, 'book': 3, 'rating': 10},
+    {'_id': 4, 'member': 4, 'book': 1, 'rating': 7},
+    {'_id': 5, 'member': 5, 'book': 2, 'rating': 5},
+    {'_id': 6, 'member': 6, 'book': 3, 'rating': 9}
 ]

@@ -1,7 +1,6 @@
 '''
 Database helpers and tools library
 '''
-
 from pymongo    import MongoClient
 import os, json, sqlite3
 
@@ -17,11 +16,11 @@ def sqlite_connect(cfg=cfg,fk=True) -> Connection:
     if fk: conn.execute('PRAGMA foreign_keys = ON')
     return conn
 
-def mongodb_connect(name=cfg['mongodb'].get('name'),seed=False) -> MongoClient:
+def mongodb_connect(name=cfg['mongodb'].get('name'),seed=None) -> MongoClient:
     cfg_mongodb = cfg['mongodb']
     client = MongoClient(f'mongodb://{cfg_mongodb.get('host')}:{cfg_mongodb.get('port')}')
     db = client[name]
-    if seed: mongodb_seed(db)
+    if seed: mongodb_seed(db,seed)
     return db
 
 def mongodb_seed(db,data):
@@ -35,3 +34,7 @@ def mongodb_seed(db,data):
 
 def sanitize_input(*args) -> tuple:
     return (*args,)
+
+def sanitize_match(u_input) -> str:
+    invalid_char = ['$',')','}',':','{','(']
+    return ''.join([c for c in u_input if c not in invalid_char])
