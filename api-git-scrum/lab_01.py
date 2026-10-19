@@ -1,7 +1,7 @@
 '''
 Lab01 - API CRUM REST - 261019
 '''
-from apitools import get_req_json, post_req_json, dummy_product
+from apitools import get_req_json, post_req_json, dummy_product, git_headers, get_req_full
 
 endpoint = 'https://fakestoreapi.com/products'
 
@@ -81,12 +81,34 @@ def get_weather_city_name() -> None:
     print(  f'Weather Report -\n{country}, {city_name}',
             f'temp: {temp}°C, wind: {wind} km/h'  )
 
-get_weather_city_name()
+# get_weather_city_name()
 
 #Ex2 - 4
 #done
 
-#Ex3
+#Ex3 - 1-2
+#done
 
+#Ex3 - 3-4
+
+git_endpoint = 'https://api.github.com/users/'
+suffix = '/repos'
+
+def get_git_info() -> None:
+    user = input('Enter a username: ')
+    response = get_req_json(git_endpoint+user+suffix,headers=git_headers)
+    print(*[repo.get('name') for repo in response],sep='\n')
+    full_response = get_req_full(git_endpoint+'dan-nilsson'+suffix, headers=git_headers)
+    print(full_response.headers.get('X-RateLimit-Limit'),full_response.headers.get('X-RateLimit-Remaining'))
+
+get_git_info()
+
+#Ex3 - 5
+# It gives error 401.
+# Error: 401. Unauthorized.     = User Unknown
+# Error: 403. Forbidden.        = User Known and not Allowed access.
+
+#Ex3 - 5-6
+# done 
 
 #Ex4
