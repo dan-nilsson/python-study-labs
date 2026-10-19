@@ -6,12 +6,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 git_token = os.getenv("GITHUB_TOKEN")
-git_headers = {"Authorization": f'Bearer: {token}'}
+git_headers = {"Authorization": f'Bearer: {git_token}'}
 
 def get_req_json(endpoint,params=None,headers=None,timeout=1):
     try:
-        respose = requests.get(endpoint, params=params, headers=headers, timeout=timeout)
-        respose.raise_for_status()
+        response = requests.get(endpoint, params=params, headers=headers, timeout=timeout)
+        response.raise_for_status()
         return response.json()
     except requests.exceptions.Timeout:
         print('The request timed out.',response.url)
@@ -103,3 +103,11 @@ def options_req(endpoint, params=None, headers=None, timeout=1) -> None:
     except requests.exceptions.RequestException as error:
         print(f'Something else went wrong: {type(error).__name__}')
     return None
+
+dummy_product = {
+    "title": "Test Product",
+    "price": 500,
+    "description": "A good product",
+    "image": "https://avatars.githubusercontent.com/u/583231",
+    "category": "electronics"
+}
