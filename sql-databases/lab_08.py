@@ -1,7 +1,10 @@
 '''
 Lab8 NoSQL MongoDB Aggregation Pipelines, Validaton, Sanitizing
 '''
-from dbtools import mongodb_connect, mongodb_validation
+import json
+from pymongo import MongoClient, errors
+
+from dbtools import mongodb_connect, mongodb_validation, sanitize_match
 from seed_webshop import seed_data
 
 db = mongodb_connect()
@@ -84,7 +87,7 @@ def sold_by_category() -> None:
             {'$unwind': '$items'},
             {'$lookup': {'from': 'products', 'localField': 'items.product_id', 'foreignField': '_id', 'as': 'product'}},
             {'$unwind': '$product'},
-            {'$group': {'_id': '$product.category', 'count': {'$sum': 1}}}]
+            {'$group': {'_id': '$product.category', 'count': {'$sum': '$items.quantity'}}}]
     result = db.orders.aggregate(pipe)
     print(*[doc for doc in result],sep='\n')
 
@@ -101,15 +104,54 @@ def revenue_per_status() -> None:
 # revenue_per_status()
 
 #Ex10
+def most_common_tags() -> None:
+    pipe = [{"$unwind": "$tags"},
+            {"$group": {"_id": "$tags", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}}]
+    result = db.products.aggregate(pipe)
+    print(*[doc for doc in result],sep='\n')
 
+# most_common_tags()
 
 #Ex11
+def find_orders(request_text) -> list:
+    # data = json.loads(request_text)
+    return list(db.orders.find({'status': {'$eq': sanitize_match(data['status'])}}))
+
+# print(*find_orders(1),sep='\n')
 
 
 #Ex12
+def products_under(text) -> list:
+    try: val = float(text)
+    except ValueError: 
+        print('Please enter a number.')
+        return []
+    pipe = [{'$match': {'price': {'$lt': val}}},
+            {'$sort': {'price': 1}}]
+    return db.products.aggregate(pipe)
 
+# print(*products_under(input('Enter price upper threshold: ')),sep='\n')
 
 #Ex13
+bad_db = MongoClient("mongodb://localhost:27020/", serverSelectionTimeoutMS=2000)
+def timeout_request() -> list:
+    pipe = [{'$project': {'product': '$name'}},
+            {'$sort': {'product': 1}}]
+    try: result = bad_db.products.aggregate(pipe)
+    except errors.ServerSelectionTimeoutError: 
+        print('server timeout')
+        result = []
+    return result
 
+print(*timeout_request(),sep='\n')
 
 #Ex14
+'''
+Personal data fields in customers: All fields.
+You still need to save all the order data for accounting, receipts.
+So having a anonomized id lets you delete all the actual customer data while
+the order records are 'intact'.
+While faster reads it creates the beforementioned problem with having data
+that might have to be deleted and or changed in many places.
+'''
