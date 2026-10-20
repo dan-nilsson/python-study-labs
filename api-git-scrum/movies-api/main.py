@@ -10,6 +10,7 @@ from apitools import json_load, json_dump
 app = FastAPI()
 
 class Movie(BaseModel):
+    id: int         | None = None
     title: str
     director: str
     year: int
@@ -18,6 +19,7 @@ class Movie(BaseModel):
     rating: float
 
 class MovieUpdate(BaseModel):
+    id: int         | None = None
     title: str      | None = None      
     director: str   | None = None
     year: int       | None = None
@@ -28,9 +30,6 @@ class MovieUpdate(BaseModel):
 #changes.model_dump(exclude_unset=True)
 
 @app.get('/')
-def home():
-    return {'message': 'Welcome'}
-
 @app.get('/movies')
 def get_movies(director: str | None = None, year: int | None = None) -> list:
     with_params = []
@@ -39,7 +38,7 @@ def get_movies(director: str | None = None, year: int | None = None) -> list:
             if movie.get('director') == director.lower().title() if director else '' or movie.get('year') == year:
                 with_params.append(movie)
         if with_params: return with_params
-        else: raise HTTPException(status_code=404, detail='No result')
+        else: raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='No result')
     return movies
 
 @app.get('/movies/{movie_id}')
@@ -62,16 +61,16 @@ def replace_movie(movie_id: int, movie: Movie) -> Movie:
                         'runtime': movie.runtime, 'genre': movie.genre, 'rating': movie.rating})
     return existing
 
+@app.patch('/movies/{movie_id}')
+def update_movie(movie_id: int, changes: MovieUpdate) -> Movie:
+    existing = find_movie(movie_id)
+    existing.update(changes.model_dump(exclude_unset=True))
+    return existing
+
 @app.delete('/movies/{movie_id}')
 def remove_movie(movie_id: int) -> None:
     existing = find_movie(movie_id)
     movies.remove(existing)
-
-@app.patch('/movies/{movie_id}')
-def update_movie(movie_id: int, movie: MovieUpdate) -> Movie:
-    existing = find_movie(movie_id)
-    #existing.update(changes.model_dump(exclude_unset=True))
-    return existing
 
 def find_movie(movie_id: int):
     for movie in movies:
