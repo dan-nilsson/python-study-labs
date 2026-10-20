@@ -1,11 +1,10 @@
 '''
 Lab2 FastAPI Server - 261020
 '''
-
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, Header, Depends, HTTPException, status
 from pydantic import BaseModel
 
-from apitools import json_load, json_dump
+from apitools import json_load, json_dump, API_KEY
 
 app = FastAPI()
 
@@ -27,9 +26,14 @@ class MovieUpdate(BaseModel):
     genre: str      | None = None
     rating: float   | None = None
 
-#changes.model_dump(exclude_unset=True)
+def check_credentials(x_api_key: str | None = Header(default=None)):
+    if x_api_key != API_KEY:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
 
 @app.get('/')
+def home():
+    return {'Movies API'}
+
 @app.get('/movies')
 def get_movies(director: str | None = None, year: int | None = None) -> list:
     with_params = []
@@ -45,7 +49,7 @@ def get_movies(director: str | None = None, year: int | None = None) -> list:
 def get_movie(movie_id: int) -> Movie:
     return find_movie(movie_id)
 
-@app.post('/movies', status_code=201)
+@app.post('/movies', status_code=201, dependencies=[Depends(check_credentials)])
 def create_movie(movie: Movie) -> Movie:
     new_id = max([m.get('id') for m in movies],default=1) + 1
     print(new_id)
@@ -54,20 +58,20 @@ def create_movie(movie: Movie) -> Movie:
     movies.append(movie)
     return new_movie
 
-@app.put('/movies/{movie_id}')
+@app.put('/movies/{movie_id}', dependencies=[Depends(check_credentials)])
 def replace_movie(movie_id: int, movie: Movie) -> Movie:
     existing = find_movie(movie_id)
     existing.update({   'title': movie.title, 'director': movie.director, 'year': movie.year,
                         'runtime': movie.runtime, 'genre': movie.genre, 'rating': movie.rating})
     return existing
 
-@app.patch('/movies/{movie_id}')
+@app.patch('/movies/{movie_id}', dependencies=[Depends(check_credentials)])
 def update_movie(movie_id: int, changes: MovieUpdate) -> Movie:
     existing = find_movie(movie_id)
     existing.update(changes.model_dump(exclude_unset=True))
     return existing
 
-@app.delete('/movies/{movie_id}')
+@app.delete('/movies/{movie_id}', dependencies=[Depends(check_credentials)])
 def remove_movie(movie_id: int) -> None:
     existing = find_movie(movie_id)
     movies.remove(existing)

@@ -5,8 +5,9 @@ import requests, os, json
 from dotenv import load_dotenv
 
 load_dotenv()
-git_token = os.getenv('GITHUB_TOKEN')
-git_headers = {'Authorization': f'Bearer {git_token}'}
+GIT_TOKEN = os.getenv('GITHUB_TOKEN')
+API_KEY = os.getenv('API_KEY')
+git_headers = {'Authorization': f'Bearer {GIT_TOKEN}'}
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 data_path = os.path.join(base_dir, 'data.json')
