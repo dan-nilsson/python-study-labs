@@ -2,7 +2,7 @@
 Lab2 FastAPI Server - 261020
 '''
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, status
 from pydantic import BaseModel
 
 from apitools import json_load, json_dump
@@ -76,9 +76,9 @@ def update_movie(movie_id: int, movie: MovieUpdate) -> Movie:
 def find_movie(movie_id: int):
     for movie in movies:
         if movie.get('id') == movie_id: return movie
-    raise HTTPException(status_code=404, detail='Movie not found')
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Movie not found')
 
-movies = [
+movies: list[dict] = [
     {'id': 1, 'title': 'Heat', 'director': 'Michael Mann', 'year': 1995, 'runtime': 170, 'genre': 'Heist', 'rating': 8.3},
     {'id': 2, 'title': 'The Godfather', 'director': 'Francis Ford Coppola', 'year': 1972, 'runtime': 175, 'genre': 'Drama', 'rating': 9.2},
     {'id': 3, 'title': 'Leon : The Professional', 'director': 'Luc Besson', 'year': 1994, 'runtime': 110, 'genre': 'Drama',  'rating': 8.5},
