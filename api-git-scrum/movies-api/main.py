@@ -17,16 +17,33 @@ class Movie(BaseModel):
     genre: str
     rating: float
 
+class MovieUpdate(BaseModel):
+    title: str      | None = None      
+    director: str   | None = None
+    year: int       | None = None
+    runtime: int    | None = None
+    genre: str      | None = None
+    rating: float   | None = None
+
+#changes.model_dump(exclude_unset=True)
+
 @app.get('/')
 def home():
     return {'message': 'Welcome'}
 
-@app.get('/movies') #will revisit params
-def get_movies() -> list:
+@app.get('/movies')
+def get_movies(director: str | None = None, year: int | None = None) -> list:
+    with_params = []
+    if director != None or year != None:
+        for movie in movies:
+            if movie.get('director') == director.lower().title() if director else '' or movie.get('year') == year:
+                with_params.append(movie)
+        if with_params: return with_params
+        else: raise HTTPException(status_code=404, detail='No result')
     return movies
 
 @app.get('/movies/{movie_id}')
-def get_movie(movie_id: int):
+def get_movie(movie_id: int) -> Movie:
     return find_movie(movie_id)
 
 @app.post('/movies', status_code=201)
@@ -49,6 +66,12 @@ def replace_movie(movie_id: int, movie: Movie) -> Movie:
 def remove_movie(movie_id: int) -> None:
     existing = find_movie(movie_id)
     movies.remove(existing)
+
+@app.patch('/movies/{movie_id}')
+def update_movie(movie_id: int, movie: MovieUpdate) -> Movie:
+    existing = find_movie(movie_id)
+    #existing.update(changes.model_dump(exclude_unset=True))
+    return existing
 
 def find_movie(movie_id: int):
     for movie in movies:
