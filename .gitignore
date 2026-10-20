@@ -15,4 +15,5 @@ Thumbs.db
 .private
 .gitconfig
 config.json
+data.json
 *.db
