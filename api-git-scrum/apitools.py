@@ -1,12 +1,23 @@
 '''
 API helper functions
 '''
-import requests, os
+import requests, os, json
 from dotenv import load_dotenv
 
 load_dotenv()
-git_token = os.getenv("GITHUB_TOKEN")
-git_headers = {"Authorization": f'Bearer {git_token}'}
+git_token = os.getenv('GITHUB_TOKEN')
+git_headers = {'Authorization': f'Bearer {git_token}'}
+
+base_dir = os.path.dirname(os.path.abspath(__file__))
+data_path = os.path.join(base_dir, 'data.json')
+
+def json_load() -> None:
+    with open(data_path, 'r') as file:
+        return json.load(file)
+
+def json_dump(data) -> None:
+    with open(data_path, 'w') as file:
+        json.dump(data, file, indent=4)
 
 def get_req_json(endpoint,params=None,headers=None,timeout=1):
     try:

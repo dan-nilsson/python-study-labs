@@ -1,7 +1,10 @@
 '''
 Lab01 - API CRUM REST - 261019
 '''
-from apitools import get_req_json, post_req_json, dummy_product, git_headers, get_req_full
+from datetime import datetime, timedelta
+
+from apitools import(   get_req_json, post_req_json, dummy_product, git_headers, get_req_full,
+                        json_load, json_dump)
 
 endpoint = 'https://fakestoreapi.com/products'
 
@@ -58,28 +61,30 @@ def find_city(name) -> dict:
 
 #Ex2 - 2
 
-def weather_from_coords(lat,long) -> tuple:
+def weather_from_coords(lat,long) -> dict:
     response = get_req_json(weather_open_meteo_endpoint,
-                            params={'latitude': lat,'longitude': long,
+                            params={'latitude': lat,'longitude': long, 'timezone': 'Europe/Stockholm',
                             'current': ['temperature_2m','wind_speed_10m']})
-    weather = response.get('current')
-    return (weather.get('temperature_2m'),weather.get('wind_speed_10m'))
+    return response.get('current')
 
-# print(weather_from_coords('Stockholm'))
+# print(weather_from_coords(10,10))
 
 #Ex2 - 3
 
-def get_weather_city_name() -> None:
-    name = input('Enter a city name: ').lower().title()
+def get_weather_city_name(name=None) -> None:
+    if not name: name = input('Enter a city name: ').lower().title()
     try: city_data = find_city(name)
     except TypeError:
         print('City name not found.')
         return
     lat, long = city_data.get('latitude'),city_data.get('longitude')
     country, city_name = city_data.get('country'),city_data.get('name')
-    temp, wind = weather_from_coords(lat,long)
+    current = weather_from_coords(lat,long)
+    temp, wind = current.get('temperature_2m'),current.get('wind_speed_10m')
+    city_data.update(current)
+    json_dump(city_data)
     print(  f'Weather Report -\n{country}, {city_name}',
-            f'temp: {temp}°C, wind: {wind} km/h'  )
+            f'temp: {temp}°C, wind: {wind} km/h')
 
 # get_weather_city_name()
 
@@ -95,13 +100,13 @@ git_endpoint = 'https://api.github.com/users/'
 suffix = '/repos'
 
 def get_git_info() -> None:
-    user = input('Enter a username: ')
+    user = input('Enter a username: ').lower()
     response = get_req_json(git_endpoint+user+suffix,headers=git_headers)
     print(*[repo.get('name') for repo in response],sep='\n')
     full_response = get_req_full(git_endpoint+'dan-nilsson'+suffix, headers=git_headers)
     print(full_response.headers.get('X-RateLimit-Limit'),full_response.headers.get('X-RateLimit-Remaining'))
 
-get_git_info()
+# get_git_info()
 
 #Ex3 - 5
 # It gives error 401.
@@ -111,4 +116,36 @@ get_git_info()
 #Ex3 - 5-6
 # done 
 
-#Ex4
+#Ex4 - 1-3
+
+def check_cache_cityname(name) -> dict:
+    file = json_load()
+    if file.get('name') == name.lower().title(): return file
+    return None
+
+def check_time_delta_10(time) -> bool:
+    file_time = datetime.strptime(time, '%Y-%m-%dT%H:%M')
+    return file_time + timedelta(minutes=10) > datetime.now()
+
+def cached_weather(name) -> None:
+    file_city, time = None, datetime(2000,1,1)
+    try:
+        file_city = check_cache_cityname(name)
+        time = file_city.get('time')
+    except TypeError: pass
+    if file_city and check_time_delta_10(time):
+        print('Local file data.')
+        country, city_name = file_city.get('country'),file_city.get('name')
+        temp, wind = file_city.get('temperature_2m'), file_city.get('wind_speed_10m')
+        print(  f'Weather Report -\n{country}, {city_name}',
+                f'temp: {temp}°C, wind: {wind} km/h')
+        return
+    print('API data.')
+    get_weather_city_name(name)
+    
+cached_weather(input('Enter a city name: '))
+
+'''
+Caching API fetch data to local file and using it when resonably fresh cuts
+down on API usage and is faster.
+'''
