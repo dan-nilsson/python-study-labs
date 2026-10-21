@@ -56,7 +56,7 @@ def get_req_full(endpoint,params=None,headers=None,timeout=1):
 
 def post_req_json(endpoint,data,params=None,headers=None,timeout=1) -> None:
     try:
-        response = requests.post(endpoint, data, params=params, headers=headers, timeout=timeout)
+        response = requests.post(endpoint, json=data, params=params, headers=headers, timeout=timeout)
         return response
     except requests.exceptions.Timeout:
         print('The request timed out.',response.url)
