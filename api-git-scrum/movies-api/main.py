@@ -9,6 +9,17 @@ from schemas import Movie, MovieUpdate
 
 app = FastAPI()
 
+movies: list[dict] = [
+    {'id': 1, 'title': 'Heat', 'director': 'Michael Mann', 'year': 1995, 'runtime': 170, 'genre': 'Heist', 'rating': 8.3},
+    {'id': 2, 'title': 'The Godfather', 'director': 'Francis Ford Coppola', 'year': 1972, 'runtime': 175, 'genre': 'Drama', 'rating': 9.2},
+    {'id': 3, 'title': 'Leon : The Professional', 'director': 'Luc Besson', 'year': 1994, 'runtime': 110, 'genre': 'Drama',  'rating': 8.5},
+    {'id': 4, 'title': 'Das Boot', 'director': 'Wolfgang Pettersen', 'year': 1981, 'runtime': 210,  'genre': 'War',  'rating': 8.3},
+    {'id': 5, 'title': 'Reservoir Dogs', 'director': 'Quintin Tarantino', 'year': 1992, 'runtime': 99,  'genre': 'Thriller',  'rating': 8.2},
+    {'id': 6, 'title': 'Full Metal Jacket', 'director': 'Stanley Kubrick', 'year': 1987, 'runtime': 116,  'genre': 'War',  'rating': 8.2},
+    {'id': 7, 'title': 'Snatch', 'director': 'Guy Ritchie', 'year': 2000, 'runtime': 104, 'genre': 'Comedy', 'rating': 8.2},
+    {'id': 8, 'title': 'Die Hard with a Vengeance', 'director': 'John McTiernan', 'year': 1995, 'runtime': 131, 'genre': 'Action',  'rating': 7.6},
+]
+
 def check_credentials(x_api_key: str | None = Header(default=None)):
     if x_api_key != API_KEY:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
@@ -16,7 +27,6 @@ def check_credentials(x_api_key: str | None = Header(default=None)):
 def load_movies() -> list:
     file = json_load()
     return file if file else movies
-    return movies
 
 def save_movies() -> None:
     json_dump(movies)
@@ -76,14 +86,3 @@ def find_movie(movie_id: int):
         if movie == None: continue
         if movie['id'] == movie_id: return movie
     raise HTTPException(status_code=404, detail='Movie not found')
-
-movies: list[dict] = [
-    {'id': 1, 'title': 'Heat', 'director': 'Michael Mann', 'year': 1995, 'runtime': 170, 'genre': 'Heist', 'rating': 8.3},
-    {'id': 2, 'title': 'The Godfather', 'director': 'Francis Ford Coppola', 'year': 1972, 'runtime': 175, 'genre': 'Drama', 'rating': 9.2},
-    {'id': 3, 'title': 'Leon : The Professional', 'director': 'Luc Besson', 'year': 1994, 'runtime': 110, 'genre': 'Drama',  'rating': 8.5},
-    {'id': 4, 'title': 'Das Boot', 'director': 'Wolfgang Pettersen', 'year': 1981, 'runtime': 210,  'genre': 'War',  'rating': 8.3},
-    {'id': 5, 'title': 'Reservoir Dogs', 'director': 'Quintin Tarantino', 'year': 1992, 'runtime': 99,  'genre': 'Thriller',  'rating': 8.2},
-    {'id': 6, 'title': 'Full Metal Jacket', 'director': 'Stanley Kubrick', 'year': 1987, 'runtime': 116,  'genre': 'War',  'rating': 8.2},
-    {'id': 7, 'title': 'Snatch', 'director': 'Guy Ritchie', 'year': 2000, 'runtime': 104, 'genre': 'Comedy', 'rating': 8.2},
-    {'id': 8, 'title': 'Die Hard with a Vengeance', 'director': 'John McTiernan', 'year': 1995, 'runtime': 131, 'genre': 'Action',  'rating': 7.6},
-]

@@ -12,7 +12,7 @@ git_headers = {'Authorization': f'Bearer {GIT_TOKEN}'}
 base_dir = os.path.dirname(os.path.abspath(__file__))
 data_path = os.path.join(base_dir, 'data.json')
 
-def json_load() -> None:
+def json_load() -> dict:
     with open(data_path, 'r') as file:
         return json.load(file)
 
