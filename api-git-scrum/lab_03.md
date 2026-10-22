@@ -60,20 +60,69 @@ What can we change in the next sprint?
 Do we need to reevaluate the story points?
 
 ## Ex6
-- .
+- a. Add Login
+
+As a Developer, I want the app to have login, So that it is more secure and to attribute actions to a specific user.
+
+- b. Export orders to Excel
+
+As a Product Owner, I want the database to export orders to Excel, So that I can more easily do data analysis and accounting.
+
+- c. Dark mode
+
+As a User, I want the app to have Dark Mode, So that it is more pleasant to use late at night.
 
 ## Ex7
-- .
+- Story : As a customer, I want to see my order history, so that I can buy the same thing again.
+
+1. Previously purchased items are displayed to the User
+2. Previously purchased items are sorted chronologically grouped by order
+3. Items can be searched for by key-words / partial name when the customer can't quite remember  
+exactly what they were looking for again
+4. The user can follow the link to evalute the product again before buying
+5. Can add item to cart again for convinent re-purchase
 
 ## Ex8
-- .
+- DoD (Definition of Done) for a team of 4
+1. Stakeholder approval
+2. Code review passed
+3. Testing passed
+4. Security requirements passed
+5. (Documentation done)
 
 ## Ex9
-- .
+- Scrum takes 45 minutes. Everyone facing the manager.
+
+The daily scrum is not suppoesed to turn into a daily status report to the manager. Eventhough it is hard for it not to be  
+used in this manner many times. It is also not an hour long meeting. If you have larger issues to resolve you connect with  
+people during the meeting and appoint a time after it to resolve the issues / discuss a solution / collaborate.
+
+The daily scrum is a short daily face-to-face meeting meant to collaboratorily solve the problems you're facing at  
+this moment. You present what you got done yesterday and plan to work on today. If you need help or to collaborate with  
+someone in your daily task. Ex. You're working on the frontend and would like the data returned by the server to be structured  
+slightly differently. You could ask one of the backend devs to have a quick chat / back-and-forth about that.  
 
 ## Ex10
-- .
 
+1. a. A team building a new mobile app
 
+Scrum. It is a new and undefined project.  
+Needs to be planned and then itteratively developed.
+
+2. b. An IT support desk
+
+Either. It is a solved problem. Should be easy enough to start work with  
+minimum planning. Could adapt to stakeholder needs later.
+
+3. c. A team fixing bugs in a webshop that is already live
+
+Kanban Important to identify what needs doing and solving the high priority  
+issues quickly. If the problem changes quickly adapt and change priority.
+
+## Ex11
+
+Fire the person showing 13. I'm just joking.
+They should re-evaluate and ask the person showing 13 how they came to that conclusion  
+maybe the rest of the team missed some complexity that wasn't immediately apparent.
 
 # Part 2 : A mini SCRUM Project
