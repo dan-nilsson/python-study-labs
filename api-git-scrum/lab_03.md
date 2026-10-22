@@ -126,3 +126,69 @@ They should re-evaluate and ask the person showing 13 how they came to that conc
 maybe the rest of the team missed some complexity that wasn't immediately apparent.
 
 # Part 2 : A mini SCRUM Project
+
+## 1 Roles Choose one Product Owner and one Scrum Master. The rest are Developers.
+
+- Roles  
+01 Daniel Nilsson   - Product Owner
+02 Gowtami          - Developer
+03 Robert           - Developer
+04 Giorgi           - Scrum Master
+
+## 2. Product Goal Write the Product Goal in one sentence.
+
+To produce a mobile friendly booking system where customers can book slots for the available training classes   
+and staff can manage classes and attendance
+
+
+## 3. Product Backlog Write 10-12 user stories. The Product Owner puts them in order, most valuable first.
+
+1. As a User, I want to be able to see the schedule of classes, So that I can decide what to book  
+2. As a User, I want to be able to book a class in the app, So that I can book a time to attend the class  
+3. As a Reception Staff, I want to be able to define the category of class, So that Users know what category the class is  
+4. As a Reception Staff, I want to be able to set a capacity limit for the class, So that the class is not over-booked  
+5. As a User, I want to be able to join the waiting list on a at-capacity booking, So that I may get a slot should one open up  
+6. As a User, I want to be able to cancel a booking, So that I don't no-show classes I can no longer attend  
+7. As an Instructor, I want to be able to see the confirmed booked participants, So that I can compare with attendés in a class  
+8. As a Reception Staff, I want to be able to add new classes to the system, So that Users may book slots and Instructors get their schedule  
+9. As a Recepton Staff, I want to be able to update times for a class should it change, So that the time of the class changes  
+   + As a User, I want to be updated about the time changing on one of my bookd classes, So that I can decide if I can attend the new time
+   + As a Instructor, I want to be updated about the time changing on one of my classes, So that I can update my schedule  
+11. As a User, I would want a reminder for my upcoming class one day in advance, So that I don't miss my booked class  
+12. As a User, I prefer to book my classes on my phone, So that I don't have to start the scary computer  
+
+
+## 4. Refinement Add 2-3 acceptance criteria to the top five stories. Write your team's Definition of Done.
+
+- DoD - FitLife App
+- 1. Passed acceptance criteria
+- 2. Stakeholder approval
+- 3. Code review passed
+- 4. Testing passed
+- 5. Security requirements passed
+- 6. The change works with the rest of the functionalities
+- 7. (Documentation done)
+
+## 5. Planning poker Make cards from paper (1, 2, 3, 5, 8, 13) and estimate the top stories. Split any story bigger than 13.
+
+3 - 5 - 3 - 2 - 2 for Top 5 stories. Marked with points on Scrum Board.
+
+## 6. Sprint Planning Your velocity is 15 points. Choose the stories for the first sprint and write a Sprint Goal.
+
+Create a basic working booking system where gym staff can add classes and members can log in, view available classes, book a place,  and see their upcoming bookings
+
+## 7. Board Draw the Sprint Backlog as a board with To do, In progress, Review and Done.
+
+- [Scrum Board](./lab_03.png)
+
+## 8. Change! The customer will announce a change while you work. Discuss: what goes into the backlog, and does anything change in the sprint?
+
+Their new stories goes in the product backlog. Sprint continues. They will have high priority in the next sprint.
+
+## 9. Sprint Review Show your board, your Sprint Goal and your top stories to the class in 3 minutes.
+
+- [Scrum Board](./lab_03.png)
+
+## 10. Retrospective As a group: what went well, what was hard, and one thing you would do differently
+
+Everything went perfect.
