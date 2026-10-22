@@ -130,10 +130,10 @@ maybe the rest of the team missed some complexity that wasn't immediately appare
 ## 1 Roles Choose one Product Owner and one Scrum Master. The rest are Developers.
 
 - Roles  
-01 Daniel Nilsson   - Product Owner
-02 Gowtami          - Developer
-03 Robert           - Developer
-04 Giorgi           - Scrum Master
+01 Daniel Nilsson   - Product Owner  
+02 Gowtami          - Developer  
+03 Robert           - Developer  
+04 Giorgi           - Scrum Master  
 
 ## 2. Product Goal Write the Product Goal in one sentence.
 
@@ -145,6 +145,7 @@ and staff can manage classes and attendance
 
 1. As a User, I want to be able to see the schedule of classes, So that I can decide what to book  
 2. As a User, I want to be able to book a class in the app, So that I can book a time to attend the class  
+2. As a User, I want to be able to login to the app, So that I can use parts relevant to me
 3. As a Reception Staff, I want to be able to define the category of class, So that Users know what category the class is  
 4. As a Reception Staff, I want to be able to set a capacity limit for the class, So that the class is not over-booked  
 5. As a User, I want to be able to join the waiting list on a at-capacity booking, So that I may get a slot should one open up  
