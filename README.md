@@ -6,7 +6,7 @@ Collection of labs and various projects from the course System Developer - Pytho
 - [Fundamentals Project](./fundamentals-project/)
 - [SQL & Databases](./sql-databases/)
 - [API, System Integration & Git/Scrum](./api-git-scrum/)
-- [Team Project](./team-project/)
+- [Team Project API/Database](./team-project-api-db/)
 - [Data Analysis & Visualization](./data-analysis-visualization/)
 - [Machine - & Deep Learning](./machine-deep-learning/)
 - [Team Project ML/DL](./team-project-ml-dl/)
