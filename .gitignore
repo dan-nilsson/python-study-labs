@@ -9,6 +9,7 @@ Desktop.ini
 __pycache__
 ._*
 Thumbs.db
+.ipynb_checkpoints
 
 # Private Information
 .env
