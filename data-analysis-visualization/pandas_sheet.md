@@ -23,7 +23,7 @@ default=5
 ### Indexing
 
 #### Set Index on Read
-pd.read_csv(index_col='col)
+pd.read_csv(index_col='col')
 #### Sort Index row, inplace for perm
 df.sort_index(inplace=True)
 #### loc can now grab row by column value
@@ -39,16 +39,16 @@ df['col']
 df[['col','col2']]   
 df.iloc[int]   
 df.loc[index]   
-df.iloc/loc[[1,2,3], col_index]
+df.iloc/loc[[1,2,3], col_index]   
 
 #### Slice. start/stop:incl
 df.loc[0:2, 'col':'col2']
 
 #### Compare
 df[col].value_counts()   
-df[col].mean()
+df[col].mean()    
 df[col].apply(len)   
-df.applymap(len)
+df.applymap(len)   
 
 #### Mask, &=AND |=OR
 df['col'] == val   
@@ -66,7 +66,7 @@ df.loc[mask, ['col','col2']]
 #### Columns
 df.columns = ['new_name','new_2']   
 df.columns = [x.upper() for x in df.columns]   
-df.columns = df.columns.str.replace(' ','_')
+df.columns = df.columns.str.replace(' ','_')   
 df.rename(columns={'current': 'new'}, inplace=True)
 
 #### Data update
@@ -75,22 +75,21 @@ df.loc[i, [col, col2]] = [val,val...]
 df.loc[i, col] = val   
 df[col].str.lower()   
 df[col] = df[col].apply(func)   
-.apply(lambda x: x.lower())
+.apply(lambda x: x.lower())   
 df[col].map({'Yes': True, 'No': False})    
 .map not matched default NaN.   
 df[col].replace({'Yes': True, 'No': False})   
 
 #### Data change
 df['full_name'] = df['first] + ' ' + df['last']   
-df.drop(columns=['first','last'], inplace=True)
-df[['first','last']] = df['full_name'].str.split(' ', expand=True)
-df.append({...} ignore_index=True)
-df.append(df2, ignore_index=True, sort=False)
-df.drop(index=val, inplace=True)
+df.drop(columns=['first','last'], inplace=True)   
+df[['first','last']] = df['full_name'].str.split(' ', expand=True)   
+df.append({...} ignore_index=True)   
+df.append(df2, ignore_index=True, sort=False)   
+df.drop(index=val, inplace=True)   
 
 #### String Operations
 str.strip(char)    
 str.lower()   
 str.upper()   
-str.title()   
-
+str.title()
