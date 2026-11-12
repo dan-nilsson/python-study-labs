@@ -1,5 +1,7 @@
 ## Pandas Cheat Sheet
 
+### Strip Output
+jupyter nbconvert --clear-output --inplace file.ipynb
 ### Basis
 #### Shape. (rows, cols)
 df.shape
@@ -51,6 +53,7 @@ df['col'] == val
 df['col'] >= 0   
 df['col].isin([vals_in_col])   
 df['col'].str.contains('str', na=False)   
+df.groupby('group_col').agg(cond=('fee',lambda x: (x > 0).sum()))
 #### Filter by mask, ~=invers
 df[mask]   
 df.loc[mask, 'col']   
@@ -92,6 +95,7 @@ df.astype(float)
 df.duplicated().sum()   
 df[df.duplicated(keep=False)].head(6)   
 df.drop_duplicates().reset_index(drop=True)   
+df = df[~mask]   
 ### Final
 #### Drop Tables and Save Clean
 df.drop(columns='empty_col')   
