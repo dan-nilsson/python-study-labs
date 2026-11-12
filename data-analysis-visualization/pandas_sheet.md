@@ -2,6 +2,8 @@
 
 ### Strip Output
 jupyter nbconvert --clear-output --inplace file.ipynb
+### Read File
+pd.read_csv('data/file.csv', parse_dates=['date'])
 ### Basis
 #### Shape. (rows, cols)
 df.shape
@@ -11,11 +13,16 @@ df.info()
 df.columns   
 #### Various Info
 df.describe()   
-df.dtype   
+df.dtype /s    
 df.nunique()   
 df.unique()   
 df.tolist()   
 df.duplicated().sum()   
+df.isna()    
+df.notna()   
+df.median()   
+df.std()    
+df.is_unique()   
 ### Options
 #### Display
 pd.set_option('display.max_columns', val)   
@@ -82,6 +89,8 @@ df[['first','last']] = df['full_name'].str.split(' ', expand=True)
 df.append({...} ignore_index=True)   
 df.append(df2, ignore_index=True, sort=False)   
 df.drop(index=val, inplace=True)   
+df.fillna(new_val)    
+
 #### String Operations
 str.strip(char)    
 str.lower()   
@@ -100,3 +109,5 @@ df = df[~mask]
 #### Drop Tables and Save Clean
 df.drop(columns='empty_col')   
 df_clean.to_csv('data/clean.csv', index=False)   
+#### Merge
+main_df.merge(part_df, on='col', how='left', validate='many_to_one')
