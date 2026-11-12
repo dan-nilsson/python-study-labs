@@ -1,9 +1,11 @@
 ## Pandas Cheat Sheet
 
+### Read / Write File
+pd.read_csv('data/file.csv', parse_dates=['date'])
+df.to_csv('data/file.csv', index=False)
 ### Strip Output
 jupyter nbconvert --clear-output --inplace file.ipynb
-### Read File
-pd.read_csv('data/file.csv', parse_dates=['date'])
+
 ### Basis
 #### Shape. (rows, cols)
 df.shape
