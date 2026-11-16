@@ -1,7 +1,7 @@
 ## Pandas Cheat Sheet
 
 ### Read / Write File
-pd.read_csv('data/file.csv', parse_dates=['date'])
+pd.read_csv('data/file.csv', parse_dates=['date'])   
 df.to_csv('data/file.csv', index=False)
 ### Strip Output
 jupyter nbconvert --clear-output --inplace file.ipynb
@@ -92,7 +92,7 @@ df.append({...} ignore_index=True)
 df.append(df2, ignore_index=True, sort=False)   
 df.drop(index=val, inplace=True)   
 df.fillna(new_val)    
-
+df.where(~df.str.contains('val'), 0)
 #### String Operations
 str.strip(char)    
 str.lower()   
@@ -100,7 +100,7 @@ str.upper()
 str.title()   
 #### Cast
 pd.to_datetime(df, errors='coerce')   
-df.astype(float)   
+df[col].astype(float)   
 ### Duplicates
 #### Info and Drop
 df.duplicated().sum()   
